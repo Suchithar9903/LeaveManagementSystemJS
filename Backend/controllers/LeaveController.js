@@ -32,14 +32,15 @@ const calculateLeaveDetails = (startDate, endDate) => {
 // Submit a new leave request
 const applyLeave = async (req, res) => {
   try {
-    // Check for validation errors
+    // Check for validation errors (assuming you're using express-validator)
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
+    // Destructure request body
     const { startDate, endDate, reason, leaveType } = req.body;
-    const userId = req.user.id;
+    const userId = req.user.id || req.body.userId;
 
     // Validate dates
     const start = new Date(startDate);
@@ -53,53 +54,58 @@ const applyLeave = async (req, res) => {
       return res.status(400).json({ error: "Cannot apply for leave in the past" });
     }
 
-    // Calculate leave days and dates
+    // Calculate leave days and dates (ensure this helper function is defined elsewhere)
     const { leaveDays, leaveDates } = calculateLeaveDetails(startDate, endDate);
 
     if (leaveDays === 0) {
       return res.status(400).json({ error: "Selected dates include only weekends. Please select valid days." });
     }
 
-    // Check if user exists
+    // Check if user exists in the database
     const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
+    if (!userId) {
+      return res.status(404).json({ error: "User ID is required" });
     }
 
     // Create the leave request
     const newLeave = new Leave({
-      user: userId,
+      userId: userId,  // Store user ID correctly in the Leave schema
       startDate,
       endDate,
       leaveType,
       reason,
       leaveDays,
       leaveDates,
-      status: "pending"
+      status: "Pending"  // Default status
     });
 
+    // Save leave request
     await newLeave.save();
 
+    // Add the leave request to the user's leaveApplications array
     user.leaveApplications.push(newLeave._id);
     await user.save();
 
-    // Send notification
-    try {
-      await sendNotification(userId, `Leave request submitted from ${startDate} to ${endDate}`);
-    } catch (notificationError) {
-      console.error("Failed to send notification:", notificationError);
-      // Don't fail the request if notification fails
-    }
-
+    // Send success response
     res.status(201).json({ 
       message: "Leave request submitted successfully", 
       leave: newLeave 
     });
+
+    // Send notification asynchronously (don't block the response)
+    try {
+      await sendNotification(userId, `Leave request submitted from ${startDate} to ${endDate}`);
+    } catch (notificationError) {
+      console.error("Failed to send notification:", notificationError);
+      // Notification failure should not block leave submission
+    }
   } catch (error) {
+    // General error handler
     console.error("Error in applyLeave:", error);
     res.status(500).json({ error: "Failed to submit leave request. Please try again." });
   }
 };
+
 
 // User fetches their leave applications
 const getMyLeaves = async (req, res) => {
@@ -117,6 +123,20 @@ const getMyLeaves = async (req, res) => {
   } catch (error) {
     console.error("Error in getMyLeaves:", error);
     res.status(500).json({ error: "Failed to fetch leave requests" });
+  }
+};
+
+// Add this at the end with your other exports if you want a dedicated function
+const getLeaveStatus = async (req, res) => {
+  try {
+    const userId = req.user.id || req.body.userId;
+    if (!userId) {
+      return res.status(401).json({ error: "User not authenticated" });
+    }
+    const leaves = await Leave.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).json(leaves);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch leave status" });
   }
 };
 
@@ -147,5 +167,6 @@ module.exports = {
   applyLeave,
   validateLeaveRequest,
   getMyLeaves,
+  getLeaveStatus,
   updateLeaveStatus
 };

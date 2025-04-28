@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post("/apply", auth, leaveController.validateLeaveRequest, leaveController.applyLeave);
 router.get("/my-leaves", auth, leaveController.getMyLeaves);
+router.get("/status", auth, leaveController.getLeaveStatus);
 router.patch("/update-status/:id", auth, checkRole("admin", "manager"), leaveController.updateLeaveStatus);
 
 module.exports = router;

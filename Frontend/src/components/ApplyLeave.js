@@ -23,13 +23,12 @@ const ApplyLeave = () => {
   const [leaveDays, setLeaveDays] = useState(0);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
 
-    if (e.target.name === "startDate" || e.target.name === "endDate") {
-      const { startDate, endDate } = {
-        ...formData,
-        [e.target.name]: e.target.value,
-      };
+    // Only calculate leave days when either startDate or endDate changes
+    if (name === "startDate" || name === "endDate") {
+      const { startDate, endDate } = { ...formData, [name]: value };
       if (startDate && endDate) {
         const { dates, count } = calculateLeaveDates(startDate, endDate);
         setLeaveDates(dates);
@@ -44,10 +43,11 @@ const ApplyLeave = () => {
     const dateList = [];
     let count = 0;
 
+    // Loop through the dates, excluding weekends (Saturday & Sunday)
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
       const day = d.getDay();
-      if (day !== 0 && day !== 6) { // Exclude weekends
-        dateList.push(new Date(d).toISOString().split("T")[0]);
+      if (day !== 0 && day !== 6) { // Exclude weekends (0 = Sunday, 6 = Saturday)
+        dateList.push(new Date(d).toISOString().split("T")[0]); // Format date as yyyy-mm-dd
         count++;
       }
     }
@@ -58,35 +58,48 @@ const ApplyLeave = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validation for missing required fields
     if (!formData.startDate || !formData.endDate || !formData.reason) {
       toast.error("Please fill all fields");
       return;
     }
 
+    // Validation to ensure there are valid leave days (i.e., not only weekends)
     if (leaveDays === 0) {
       toast.warn("Selected dates include only weekends. Please select valid days.");
       return;
     }
 
+    // Get the user ID from the local storage (assuming the token includes the user information)
+    const token = localStorage.getItem("authToken");
+    const userId = localStorage.getItem("userId"); // Make sure you're storing the user ID when the user logs in
+
+    if (!userId) {
+      toast.error("User ID is missing. Please log in again.");
+      return;
+    }
+
+    // Prepare the payload for the leave request, including the user ID
     const payload = {
       ...formData,
       leaveDays,
       leaveDates,
+      userId,  // Add userId to the payload
     };
 
     try {
-      const token = localStorage.getItem("authToken"); // Assuming token is stored in localStorage
+      // Make the API request to submit the leave request
       const response = await API.post("http://localhost:5000/api/leaves/apply", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      // If API call successful, update redux (optional)
+      // If API call is successful, dispatch action to update Redux store
       dispatch(applyLeaveAction(payload));
 
-      toast.success("Leave request submitted");
-      setTimeout(() => navigate("/leave-status"), 1000);
+      toast.success("Leave request submitted successfully");
+      setTimeout(() => navigate("/leave-status"), 1000); // Redirect to leave status page
     } catch (err) {
       console.error(err);
       toast.error("Failed to submit leave request");

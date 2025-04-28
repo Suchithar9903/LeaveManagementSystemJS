@@ -18,6 +18,7 @@ app.use(cors())
 
 app.use("/api/users", userRoutes);
 app.use("/api/leaves", leaveRoutes);
+// app.use("/api/leaves", require("./routes/LeaveRoutes"));
 app.use('/api/admins', adminRoutes);
 app.use("/api/notifications", notificationRoutes)
 
