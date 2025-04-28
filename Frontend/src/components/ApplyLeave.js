@@ -5,9 +5,12 @@ import "../styles/app_style.css";
 import "../styles/applyleave.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { applyLeave as applyLeaveAction } from "../redux/leaveSlice.js";
 
 const ApplyLeave = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     startDate: "",
@@ -15,6 +18,7 @@ const ApplyLeave = () => {
     leaveType: "casual",
     reason: "",
   });
+
   const [leaveDates, setLeaveDates] = useState([]);
   const [leaveDays, setLeaveDays] = useState(0);
 
@@ -64,20 +68,22 @@ const ApplyLeave = () => {
       return;
     }
 
-    try {
-      const payload = {
-        ...formData,
-        leaveDays,
-        leaveDates,
-      };
+    const payload = {
+      ...formData,
+      leaveDays,
+      leaveDates,
+    };
 
-      // Send the token with the API request
+    try {
       const token = localStorage.getItem("authToken"); // Assuming token is stored in localStorage
       const response = await API.post("http://localhost:5000/api/leaves/apply", payload, {
         headers: {
-          Authorization: `Bearer ${token}`, // Send the token in the header
+          Authorization: `Bearer ${token}`,
         },
       });
+
+      // If API call successful, update redux (optional)
+      dispatch(applyLeaveAction(payload));
 
       toast.success("Leave request submitted");
       setTimeout(() => navigate("/leave-status"), 1000);

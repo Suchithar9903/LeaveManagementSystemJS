@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../axios.js";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLeaveStatus } from "../redux/leaveSlice.js";
 import "../styles/app_style.css";
 import "../styles/leavestatus.css";
 import { toast } from "react-toastify";
 
 const LeaveStatus = () => {
   const navigate = useNavigate();
-  const [leaves, setLeaves] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const { leaves, loading, error } = useSelector((state) => state.leave);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -17,28 +17,9 @@ const LeaveStatus = () => {
       toast.error("Please log in to view leave status");
       navigate("/login");
     } else {
-      fetchLeaveStatus();
+      dispatch(fetchLeaveStatus());
     }
-  }, [navigate]);
-
-  const fetchLeaveStatus = async () => {
-    try {
-      setLoading(true);
-      const response = await API.get("/leaves/status");
-      if (response.data) {
-        setLeaves(response.data);
-        setError(null);
-      } else {
-        setError("No leave requests found");
-      }
-    } catch (err) {
-      console.error("Fetch Leave Status Error:", err);
-      setError("Failed to fetch leave status. Please try again.");
-      toast.error("Failed to fetch leave status.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [navigate, dispatch]);
 
   // Map status to user-friendly messages
   const getStatusMessage = (status) => {
