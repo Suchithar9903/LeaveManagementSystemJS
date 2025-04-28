@@ -3,8 +3,8 @@ import Login from "./pages/Login.js";
 import Register from "./pages/Register.js";
 import Profile from "./pages/UserProfile.js";
 import "../src/styles/app_style.css";
-import Gallery from "./pages/Gallery.js";
-import UploadArtwork from "./components/UploadArtwork.js";
+import LeaveStatus from "./pages/LeaveStatus.js";
+import ApplyLeave from "./components/ApplyLeave.js";
 import { useEffect, useRef, useState } from "react";
 import AdminLogin from "./pages/AdminLogin.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
@@ -137,7 +137,7 @@ function App() {
         <div className="container mt-3">
             <h1 className="display-4">{isAuthenticated && username ? 
                 `Welcome back , ${username}` : 
-                "Welcome to Virtual Art Gallery"
+                "Welcome to Leave Management System..."
             }</h1>
             <div className={`nav-wrapper ${navVisible ? 'visible' : 'hidden'}`}>
             <div className="hamburger-menu" onClick={toggleNav}>
@@ -154,8 +154,8 @@ function App() {
                 ) : isAuthenticated ? (
                     <>  
                         <Link to="/" className="nav-link" onClick={closeNav}>Home</Link>
-                        <Link to="/gallery" className="nav-link" onClick={closeNav}>Gallery</Link>
-                        <Link to="/upload" className="nav-link" onClick={closeNav}>Upload</Link>
+                        <Link to="/leave-status" className="nav-link" onClick={closeNav}>Leave Status</Link>
+                        <Link to="/apply-leave" className="nav-link" onClick={closeNav}>Apply Leave</Link>
                         <Link to="/profile" className="nav-link" onClick={closeNav}><FaUser className="nav-icon" /></Link>
                         <Link to="/notifications" className="nav-link" onClick={closeNav}>
                             <div style={{position: "relative"}}>
@@ -193,8 +193,8 @@ function App() {
                 <Route path="/" element={<HomeBanner />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/gallery" element={<Gallery />} />
-                <Route path="/upload" element={<UploadArtwork />} />
+                <Route path="/leave-status" element={<LeaveStatus />} />
+                <Route path="/apply-leave" element={<ApplyLeave />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/notifications" element={<Notifications onMarkAsRead={handleNotifications}/>} />
                 <Route path="/admin-login" element={<AdminLogin onLogin={handleAdminLogin} />} />
@@ -203,7 +203,7 @@ function App() {
 
             <center>
                 <div className="footer">
-                    <p>&copy; 2025 Virtual Art Gallery</p>
+                    <p>&copy; 2025 Leave Management System [All Rights Reserved]</p>
                 </div>
             </center>
         </div>

@@ -302,3 +302,67 @@
         gap: 20px;
     }
 }
+
+/* ApplyLeave Page */
+.apply-leave {
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+  
+  .apply-leave .card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .apply-leave .form-label {
+    font-weight: bold;
+  }
+  
+  .apply-leave .alert-info {
+    margin-top: 20px;
+    background-color: #e9f7fb;
+    border-color: #a5d7f7;
+  }
+  
+  .apply-leave .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    font-size: 16px;
+    padding: 12px;
+  }
+  
+  /* LeaveStatus Page */
+  .leave-status {
+    padding: 20px;
+  }
+  
+  .leave-status .card {
+    margin-bottom: 20px;
+  }
+  
+  .leave-status .card-body {
+    padding: 20px;
+  }
+  
+  .leave-status .badge {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  
+  .leave-status .bg-warning {
+    background-color: #ffc107;
+  }
+  
+  .leave-status .bg-success {
+    background-color: #28a745;
+  }
+  
+  .leave-status .bg-danger {
+    background-color: #dc3545;
+  }
+  
+  .leave-status .bg-secondary {
+    background-color: #6c757d;
+  }
+  

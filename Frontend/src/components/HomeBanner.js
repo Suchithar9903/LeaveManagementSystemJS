@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function HomeBanner() {
     const navigate = useNavigate();
 
-    const handleExploreGallery = () => {
+    const handleExplore = () => {
         const userToken = localStorage.getItem("token");
         if(userToken){
             navigate("/gallery");
@@ -17,15 +17,11 @@ function HomeBanner() {
     return (
         <div className="banner">
             <div className="banner-text">
-                <h2>Experience the Beauty of Virtual Art</h2>
-                <p>Explore and showcase amazing digital artworks</p>
-                <button className="explore-btn" onClick={handleExploreGallery}>
-                    Explore Gallery
+                <h2>Leave Management System</h2>
+                <p>Manager your Leaves and track them here!</p>
+                <button className="explore-btn" onClick={handleExplore}>
+                    Get Started
                 </button>
-            </div>
-
-            <div className="banner-image">
-                <img src="https://res.cloudinary.com/dnifht7ji/image/upload/v1741324618/homebanner_uzbktj.jpg" alt="Virtual Art Gallery" />
             </div>
         </div>
     );
