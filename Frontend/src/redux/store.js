@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import galleryReducer from "./gallerySlice.js";
+import leaveReducer from "./leaveSlice.js";
 import userReducer from "./UserSlice.js";
 import notificationReduder from "./notificationSlice.js";
 
 const store = configureStore({
     reducer:{
-        gallery : galleryReducer,
+        leave : leaveReducer,
         user : userReducer,
         notifications: notificationReduder
     },

@@ -14,22 +14,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  bio: {
+  role: {
     type: String,
-    default: ""
+    enum: ["employee", "manager"],  // Restrict to employee and manager roles
+    required: true
   },
-  gender: {
-    type: String,
-    enum: ["male", "female", ""],
-    default: ""
-  },
-  likedArtworks: [{
+  leaveApplications: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Artwork"
-  }],
-  uploadedArtworks: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Artwork"
+    ref: "Leave"
   }]
 });
 
