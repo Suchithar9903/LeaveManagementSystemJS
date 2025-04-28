@@ -1,0 +1,304 @@
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.display-4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    animation: slideIn 1s ease-in-out;
+    font-size: xx-large;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.navbar-wrapper {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+    background-color: rgba(248, 249, 250, 0.9);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin-bottom: 30px;
+}
+
+.navbar-wrapper.visible {
+    transform: translateY(0);
+}
+
+.navbar-wrapper.hidden {
+    transform: translateY(-100%);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    background-color: rgba(248, 249, 250, 0.9);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.btn-outline-primary {
+    border: 2px solid #3498db;
+    color: #3498db;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    padding: 8px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-outline-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(52, 152, 219, 0.2), transparent);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease;
+    border-radius: 50%;
+}
+
+.btn-outline-primary:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-outline-primary:hover {
+    background-color: #3498db;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+}
+
+.btn-outline-danger {
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    padding: 8px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-outline-danger::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(231, 76, 60, 0.2), transparent);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease;
+    border-radius: 50%;
+}
+
+.btn-outline-danger:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-outline-danger:hover {
+    background-color: #e74c3c;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+    background-color: rgba(248, 249, 250, 0.9);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.footer p {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px;
+    background-color: rgba(248, 249, 250, 0.9);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #3498db;
+    position: relative;
+    transition: color 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #3498db;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #fff;
+    background: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.nav-link.logout {
+    color: #e74c3c;
+}
+
+.nav-link.logout:hover {
+    background-color: #e74c3c;
+    color: white;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+    color: #3498db;
+    margin-right: 8px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover .nav-icon {
+    color: white;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.hamburger-menu {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+@media screen and (max-width: 768px) {
+    .hamburger-menu {
+        display: block;
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        z-index: 1001;
+    }
+
+    .navbar-wrapper {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .navbar-container {
+        position: fixed;
+        top: 0;
+        right: -250px;
+        width: 250px;
+        height: 100vh;
+        background-color: #fff;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        padding: 60px 20px 20px;
+        transition: right 0.3s ease;
+        z-index: 90;
+        border-radius: 0;
+    }
+
+    .navbar-container.nav-open {
+        right: 0;
+    }
+
+    .nav-link {
+        display: block;
+        margin: 10px 0;
+        text-align: left;
+        width: 100%;
+    }
+
+    .btn-outline-primary, .btn-outline-danger {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    body {
+        padding-top: 60px;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .navbar-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+}

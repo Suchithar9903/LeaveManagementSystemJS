@@ -1,0 +1,32 @@
+const express = require("express");
+const connectDB = require("./config/db.js");
+const userRoutes = require("./routes/userRoutes.js");
+const artworkRoutes = require("./routes/artworkRoutes.js");
+const adminRoutes = require("./routes/adminRoutes.js")
+const notificationRoutes = require("./routes/notificationRoutes.js");
+const dotenv = require("dotenv");
+const cors = require("cors"); 
+require('dotenv').config();
+dotenv.config();
+
+const app = express();
+
+connectDB();
+
+app.use(express.json());
+app.use(cors())
+
+app.use("/api/users", userRoutes);
+app.use("/api/artworks", artworkRoutes);
+app.use('/api/admins', adminRoutes);
+app.use("/api/notifications", notificationRoutes)
+
+app.get("/", (req, res) => {
+  res.send("Welcome to the Virtual Art Gallery API");
+});
+
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
