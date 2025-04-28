@@ -108,8 +108,8 @@ const ApplyLeave = () => {
 
   return (
     <div className="apply-leave container mt-4">
-      <h2 className="mb-4 text-center">Apply for Leave</h2>
       <form onSubmit={handleSubmit} className="card p-4 shadow-sm mx-auto" style={{ maxWidth: "600px" }}>
+      <h2 className="mb-4">Apply for Leave</h2>
         <div className="mb-3">
           <label className="form-label">Leave Type</label>
           <select name="leaveType" className="form-select" value={formData.leaveType} onChange={handleChange}>

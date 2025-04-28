@@ -21,28 +21,19 @@ const LeaveStatus = () => {
     }
   }, [navigate, dispatch]);
 
-  // Map status to user-friendly messages
-  const getStatusMessage = (status) => {
-    const messages = {
-      pending: "Your leave application is pending approval.",
-      approved: "Your leave application has been approved.",
-      rejected: "Your leave application has been rejected.",
-    };
-    return messages[status] || "Unknown status";
-  };
-
-  // Status badge component
-  const getStatusBadge = (status) => {
-    const statusClasses = {
-      pending: "bg-warning",
-      approved: "bg-success",
-      rejected: "bg-danger",
-    };
-    return (
-      <span className={`badge ${statusClasses[status] || "bg-secondary"}`}>
-        {status.charAt(0).toUpperCase() + status.slice(1)}
-      </span>
-    );
+  // Helper function to get badge style
+  const getStatusBadgeStyle = (status) => {
+    switch (status.toLowerCase()) {
+      case "pending":
+        return { backgroundColor: "#ffc107", color: "#212529" }; // Yellow
+      case "approved":
+      case "accepted":
+        return { backgroundColor: "#28a745", color: "#fff" }; // Green
+      case "rejected":
+        return { backgroundColor: "#dc3545", color: "#fff" }; // Red
+      default:
+        return { backgroundColor: "#6c757d", color: "#fff" }; // Grey for unknown
+    }
   };
 
   if (loading) {
@@ -61,20 +52,40 @@ const LeaveStatus = () => {
       ) : (
         <div className="row">
           {leaves.map((leave) => (
-            <div key={leave._id} className="col-md-6 mb-4">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Leave Request</h5>
-                  <p className="card-text">
-                    <strong>Type:</strong> {leave.leaveType}<br />
-                    <strong>Start Date:</strong> {new Date(leave.startDate).toLocaleDateString()}<br />
-                    <strong>End Date:</strong> {new Date(leave.endDate).toLocaleDateString()}<br />
-                    <strong>Reason:</strong> {leave.reason}<br />
-                    <strong>Status:</strong> {getStatusBadge(leave.status)}
-                  </p>
-                  <p className="text-muted">{getStatusMessage(leave.status)}</p>
-                </div>
-              </div>
+            <div
+              key={leave._id}
+              className="leave-container"
+              style={{
+                position: "relative",
+                marginBottom: "24px", // space between containers
+                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                borderRadius: "8px",
+                padding: "24px",
+                background: "#fff",
+              }}
+            >
+              {/* Status Badge */}
+              <span
+                style={{
+                  ...getStatusBadgeStyle(leave.status),
+                  position: "absolute",
+                  top: "16px",
+                  right: "16px",
+                  padding: "6px 16px",
+                  borderRadius: "16px",
+                  fontWeight: "bold",
+                  fontSize: "14px",
+                  zIndex: 10,
+                }}
+              >
+                {leave.status.charAt(0).toUpperCase() + leave.status.slice(1)}
+              </span>
+
+              {/* Leave details */}
+              <div><strong>Type:</strong> {leave.leaveType}</div>
+              <div><strong>Start Date:</strong> {new Date(leave.startDate).toLocaleDateString()}</div>
+              <div><strong>End Date:</strong> {new Date(leave.endDate).toLocaleDateString()}</div>
+              <div><strong>Reason:</strong> {leave.reason}</div>
             </div>
           ))}
         </div>
