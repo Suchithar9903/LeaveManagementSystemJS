@@ -1,5 +1,4 @@
 const Admin = require('../models/Admin.js');
-const Artwork = require('../models/Artwork.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require("express-validator");

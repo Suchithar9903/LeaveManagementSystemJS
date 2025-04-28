@@ -8,7 +8,7 @@ function HomeBanner() {
     const handleExplore = () => {
         const userToken = localStorage.getItem("token");
         if(userToken){
-            navigate("/gallery");
+            navigate("/apply-leave");
         }else{
             navigate("/login");
         } 

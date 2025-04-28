@@ -53,10 +53,12 @@ const ApplyLeave = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!formData.startDate || !formData.endDate || !formData.reason) {
       toast.error("Please fill all fields");
       return;
     }
+
     if (leaveDays === 0) {
       toast.warn("Selected dates include only weekends. Please select valid days.");
       return;
@@ -69,7 +71,14 @@ const ApplyLeave = () => {
         leaveDates,
       };
 
-      await API.post("/leaves/apply", payload);
+      // Send the token with the API request
+      const token = localStorage.getItem("authToken"); // Assuming token is stored in localStorage
+      const response = await API.post("http://localhost:5000/api/leaves/apply", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Send the token in the header
+        },
+      });
+
       toast.success("Leave request submitted");
       setTimeout(() => navigate("/leave-status"), 1000);
     } catch (err) {

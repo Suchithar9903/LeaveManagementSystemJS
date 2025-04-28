@@ -23,7 +23,7 @@ const AuthForm = ({ isLogin, onLogin }) => {
                 if (onLogin){ 
                     onLogin();
                 }
-                setTimeout (() => {navigate("/gallery");}, 100)
+                setTimeout (() => {navigate("/");}, 100)
             }else{
                 await API.post("users/register", formData);
                 toast.success("Registration successfull");

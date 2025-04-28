@@ -1,7 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db.js");
 const userRoutes = require("./routes/userRoutes.js");
-const artworkRoutes = require("./routes/artworkRoutes.js");
+const leaveRoutes = require("./routes/LeaveRoutes.js");
 const adminRoutes = require("./routes/adminRoutes.js")
 const notificationRoutes = require("./routes/notificationRoutes.js");
 const dotenv = require("dotenv");
@@ -17,12 +17,12 @@ app.use(express.json());
 app.use(cors())
 
 app.use("/api/users", userRoutes);
-app.use("/api/artworks", artworkRoutes);
+app.use("/api/leaves", leaveRoutes);
 app.use('/api/admins', adminRoutes);
 app.use("/api/notifications", notificationRoutes)
 
 app.get("/", (req, res) => {
-  res.send("Welcome to the Virtual Art Gallery API");
+  res.send("Welcome to Leave Mnangement System API");
 });
 
 
