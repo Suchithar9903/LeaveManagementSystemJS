@@ -6,7 +6,7 @@ import "../styles/applyleave.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
-import { applyLeave as applyLeaveAction } from "../redux/leaveSlice.js";
+import { applyLeave as applyLeaveAction, fetchLeaveStatus } from "../redux/leaveSlice.js";
 
 const ApplyLeave = () => {
   const navigate = useNavigate();
@@ -96,7 +96,7 @@ const ApplyLeave = () => {
       });
 
       // If API call is successful, dispatch action to update Redux store
-      dispatch(applyLeaveAction(payload));
+      dispatch(fetchLeaveStatus());
 
       toast.success("Leave request submitted successfully");
       setTimeout(() => navigate("/leave-status"), 1000); // Redirect to leave status page
