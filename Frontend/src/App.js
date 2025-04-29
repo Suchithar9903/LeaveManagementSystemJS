@@ -10,7 +10,7 @@ import AdminLogin from "./pages/AdminLogin.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
 import Notifications from "./components/Notifications.js";
 import HomeBanner from "./components/HomeBanner.js";
-import managerDashboard from "./pages/ManagerDashboard.js";
+import ManagerDashboard from "./pages/ManagerDashboard.js";
 import { FaUser, FaBell, FaTimes, FaBars } from "react-icons/fa";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -167,7 +167,7 @@ function App() {
                         )}
                         {userRole === "manager" && (
                             <>
-                                <Link to="/leave-requests" className="nav-link" onClick={closeNav}>Leave Requests</Link>
+                                <Link to="/manager-dashboard" className="nav-link" onClick={closeNav}>Leave Requests</Link>
                             </>
                         )}
                         <Link to="/profile" className="nav-link" onClick={closeNav}><FaUser className="nav-icon" /></Link>
@@ -213,6 +213,8 @@ function App() {
                 <Route path="/notifications" element={<Notifications onMarkAsRead={handleNotifications}/>} />
                 <Route path="/admin-login" element={<AdminLogin onLogin={handleAdminLogin} />} />
                 <Route path="/dashboard" element={<AdminDashboard />} />
+                <Route path="/manager-dashboard" element={<ManagerDashboard />} />
+
             </Routes>
 
             <center>

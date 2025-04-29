@@ -63,7 +63,7 @@ const LeaveStatus = () => {
                 padding: "24px",
                 background: "#fff",
               }}
-            >
+              >
               {/* Status Badge */}
               <span
                 style={{

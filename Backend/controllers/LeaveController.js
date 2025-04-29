@@ -133,7 +133,7 @@ const getLeaveStatus = async (req, res) => {
     if (!userId) {
       return res.status(401).json({ error: "User not authenticated" });
     }
-    const leaves = await Leave.find({ userId }).sort({ createdAt: -1 });
+    const leaves = await Leave.find({ userId: req.user.id }).populate("userId", "name email").sort({ createdAt: -1 });
     res.status(200).json(leaves);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch leave status" });

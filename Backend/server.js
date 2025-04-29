@@ -4,6 +4,7 @@ const userRoutes = require("./routes/userRoutes.js");
 const leaveRoutes = require("./routes/LeaveRoutes.js");
 const adminRoutes = require("./routes/adminRoutes.js")
 const notificationRoutes = require("./routes/notificationRoutes.js");
+const managerRoutes = require("./routes/managerRoutes.js");
 const dotenv = require("dotenv");
 const cors = require("cors"); 
 require('dotenv').config();
@@ -19,7 +20,8 @@ app.use(cors())
 app.use("/api/users", userRoutes);
 app.use("/api/leaves", leaveRoutes);
 app.use('/api/admins', adminRoutes);
-app.use("/api/notifications", notificationRoutes)
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/leaves", managerRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Leave Mnangement System API");

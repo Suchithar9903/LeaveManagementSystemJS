@@ -6,7 +6,7 @@ export const applyLeave = createAsyncThunk(
   "leave/applyLeave",
   async (formData, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("token");
       const response = await API.post("/leaves/apply", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -24,7 +24,7 @@ export const fetchLeaveStatus = createAsyncThunk(
   "leave/fetchLeaveStatus",
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("token");
       const response = await API.get("/leaves/status", {
         headers: {
           Authorization: `Bearer ${token}`,
