@@ -10,6 +10,7 @@ import AdminLogin from "./pages/AdminLogin.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
 import Notifications from "./components/Notifications.js";
 import HomeBanner from "./components/HomeBanner.js";
+import managerDashboard from "./pages/ManagerDashboard.js";
 import { FaUser, FaBell, FaTimes, FaBars } from "react-icons/fa";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,6 +22,7 @@ function App() {
     const [username, setUsername] = useState("");
     const [navOpen, setNavOpen] = useState(false);
     const [hasUnreadNotif, setHasUnreadNotif] = useState(false);
+    const [userRole, setUserRole] = useState("");
     const navigate = useNavigate();
     const [navVisible, setNavVisible] = useState(true);
     const lastScrollY = useRef(0);
@@ -50,6 +52,7 @@ function App() {
 
         if (userToken) {
             const decodedToken = jwtDecode(userToken);
+            console.log('Decoded JWT:', decodedToken);
             const expiryTime = decodedToken.exp * 1000;
             const currentTime = Date.now();
 
@@ -57,6 +60,7 @@ function App() {
                 handleLogout();
             }else{
             setIsAuthenticated(true);
+            setUserRole((decodedToken.user && decodedToken.user.role ? decodedToken.user.role : "").toLowerCase());
             fetchUserProfile(userToken);
             fetchNotifications(userToken);
 
@@ -139,6 +143,7 @@ function App() {
                 `Welcome back , ${username}` : 
                 "Welcome to Leave Management System..."
             }</h1>
+            {/* Removed debug Role display as requested */}
             <div className={`nav-wrapper ${navVisible ? 'visible' : 'hidden'}`}>
             <div className="hamburger-menu" onClick={toggleNav}>
                 {navOpen ? <FaTimes /> : <FaBars />}
@@ -154,8 +159,17 @@ function App() {
                 ) : isAuthenticated ? (
                     <>  
                         <Link to="/" className="nav-link" onClick={closeNav}>Home</Link>
-                        <Link to="/leave-status" className="nav-link" onClick={closeNav}>Leave Status</Link>
-                        <Link to="/apply-leave" className="nav-link" onClick={closeNav}>Apply Leave</Link>
+                        {userRole === "employee" && (
+                            <>
+                                <Link to="/leave-status" className="nav-link" onClick={closeNav}>Leave Status</Link>
+                                <Link to="/apply-leave" className="nav-link" onClick={closeNav}>Apply Leave</Link>
+                            </>
+                        )}
+                        {userRole === "manager" && (
+                            <>
+                                <Link to="/leave-requests" className="nav-link" onClick={closeNav}>Leave Requests</Link>
+                            </>
+                        )}
                         <Link to="/profile" className="nav-link" onClick={closeNav}><FaUser className="nav-icon" /></Link>
                         <Link to="/notifications" className="nav-link" onClick={closeNav}>
                             <div style={{position: "relative"}}>

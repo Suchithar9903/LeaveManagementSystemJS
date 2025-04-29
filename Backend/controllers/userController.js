@@ -33,7 +33,9 @@ const register = async (req, res) => {
 
     const payload = {
       user: {
-        id: user.id
+        id: user.id,
+        role: user.role,
+        name: user.name
       }
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
@@ -62,7 +64,9 @@ const login = async (req, res) => {
 
     const payload = {
       user: {
-        id: user.id
+        id: user.id,
+        role: user.role,
+        name: user.name
       }
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
