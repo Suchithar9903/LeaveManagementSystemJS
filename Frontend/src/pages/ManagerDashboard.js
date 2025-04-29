@@ -74,7 +74,7 @@ const ManagerDashboard = () => {
               <p><strong>Leave Type:</strong> {leave.leaveType}</p>
               <p><strong>Start Date:</strong> {new Date(leave.startDate).toLocaleDateString()}</p>
               <p><strong>End Date:</strong> {new Date(leave.endDate).toLocaleDateString()}</p>
-              <p><strong>Total Days:</strong> {leave.totalDays}</p>
+              <p><strong>Total Days:</strong> {leave.leaveDays}</p>
               <p><strong>Status:</strong> {leave.status}</p>
             </div>
             {activeTab === "Pending" && (

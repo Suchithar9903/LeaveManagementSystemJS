@@ -85,6 +85,7 @@ const LeaveStatus = () => {
               <div><strong>Type:</strong> {leave.leaveType}</div>
               <div><strong>Start Date:</strong> {new Date(leave.startDate).toLocaleDateString()}</div>
               <div><strong>End Date:</strong> {new Date(leave.endDate).toLocaleDateString()}</div>
+              <div><strong>Total Days:</strong> {leave.leaveDays}</div>
               <div><strong>Reason:</strong> {leave.reason}</div>
             </div>
           ))}

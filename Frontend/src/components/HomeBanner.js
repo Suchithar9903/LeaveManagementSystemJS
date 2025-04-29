@@ -8,10 +8,20 @@ function HomeBanner() {
     const handleExplore = () => {
         const userToken = localStorage.getItem("token");
         if(userToken){
-            navigate("/apply-leave");
+            try {
+                const decodedToken = JSON.parse(atob(userToken.split('.')[1]));
+                const role = decodedToken.user && decodedToken.user.role ? decodedToken.user.role.toLowerCase() : "";
+                if(role === "manager"){
+                    navigate("/manager-dashboard");
+                } else {
+                    navigate("/apply-leave");
+                }
+            } catch (e) {
+                navigate("/apply-leave");
+            }
         }else{
             navigate("/login");
-        } 
+        }
     };
 
     return (
