@@ -1,6 +1,6 @@
 ﻿# LeaveManagementSystemJS
 
-Here’s a concise summary you can use in your GitHub README file for your completed Leave Management System project:
+Here’s a concise summary README file of Leave Management System project:
 
 ---
 
